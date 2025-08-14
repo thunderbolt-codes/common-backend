@@ -15,15 +15,15 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Result _$ResultFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
+  switch (json['type']) {
     case 'success':
       return _Success.fromJson(json);
     case 'error':
       return _Error.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'Result',
-          'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(
+          json, 'type', 'Result', 'Invalid union type "${json['type']}"!');
   }
 }
 
@@ -31,19 +31,19 @@ Result _$ResultFromJson(Map<String, dynamic> json) {
 mixin _$Result {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(dynamic data, bool? isBinary) success,
+    required TResult Function(dynamic data) success,
     required TResult Function(int code, String error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(dynamic data, bool? isBinary)? success,
+    TResult? Function(dynamic data)? success,
     TResult? Function(int code, String error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(dynamic data, bool? isBinary)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(int code, String error)? error,
     required TResult orElse(),
   }) =>
@@ -98,7 +98,7 @@ abstract class _$$SuccessImplCopyWith<$Res> {
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({dynamic data, bool? isBinary});
+  $Res call({dynamic data});
 }
 
 /// @nodoc
@@ -115,17 +115,12 @@ class __$$SuccessImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? data = freezed,
-    Object? isBinary = freezed,
   }) {
     return _then(_$SuccessImpl(
       freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      isBinary: freezed == isBinary
-          ? _value.isBinary
-          : isBinary // ignore: cast_nullable_to_non_nullable
-              as bool?,
     ));
   }
 }
@@ -133,7 +128,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SuccessImpl extends _Success {
-  const _$SuccessImpl(this.data, {this.isBinary, final String? $type})
+  const _$SuccessImpl(this.data, {final String? $type})
       : $type = $type ?? 'success',
         super._();
 
@@ -142,15 +137,13 @@ class _$SuccessImpl extends _Success {
 
   @override
   final dynamic data;
-  @override
-  final bool? isBinary;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'Result.success(data: $data, isBinary: $isBinary)';
+    return 'Result.success(data: $data)';
   }
 
   @override
@@ -158,15 +151,13 @@ class _$SuccessImpl extends _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl &&
-            const DeepCollectionEquality().equals(other.data, data) &&
-            (identical(other.isBinary, isBinary) ||
-                other.isBinary == isBinary));
+            const DeepCollectionEquality().equals(other.data, data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(data), isBinary);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
   /// Create a copy of Result
   /// with the given fields replaced by the non-null parameter values.
@@ -179,30 +170,30 @@ class _$SuccessImpl extends _Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(dynamic data, bool? isBinary) success,
+    required TResult Function(dynamic data) success,
     required TResult Function(int code, String error) error,
   }) {
-    return success(data, isBinary);
+    return success(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(dynamic data, bool? isBinary)? success,
+    TResult? Function(dynamic data)? success,
     TResult? Function(int code, String error)? error,
   }) {
-    return success?.call(data, isBinary);
+    return success?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(dynamic data, bool? isBinary)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(int code, String error)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(data, isBinary);
+      return success(data);
     }
     return orElse();
   }
@@ -247,14 +238,12 @@ class _$SuccessImpl extends _Success {
 }
 
 abstract class _Success extends Result {
-  const factory _Success(final dynamic data, {final bool? isBinary}) =
-      _$SuccessImpl;
+  const factory _Success(final dynamic data) = _$SuccessImpl;
   const _Success._() : super._();
 
   factory _Success.fromJson(Map<String, dynamic> json) = _$SuccessImpl.fromJson;
 
   dynamic get data;
-  bool? get isBinary;
 
   /// Create a copy of Result
   /// with the given fields replaced by the non-null parameter values.
@@ -316,7 +305,7 @@ class _$ErrorImpl extends _Error {
   @override
   final String error;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override
@@ -348,7 +337,7 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(dynamic data, bool? isBinary) success,
+    required TResult Function(dynamic data) success,
     required TResult Function(int code, String error) error,
   }) {
     return error(code, this.error);
@@ -357,7 +346,7 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(dynamic data, bool? isBinary)? success,
+    TResult? Function(dynamic data)? success,
     TResult? Function(int code, String error)? error,
   }) {
     return error?.call(code, this.error);
@@ -366,7 +355,7 @@ class _$ErrorImpl extends _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(dynamic data, bool? isBinary)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(int code, String error)? error,
     required TResult orElse(),
   }) {

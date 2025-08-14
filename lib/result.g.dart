@@ -9,26 +9,24 @@ part of 'result.dart';
 _$SuccessImpl _$$SuccessImplFromJson(Map<String, dynamic> json) =>
     _$SuccessImpl(
       json['data'],
-      isBinary: json['isBinary'] as bool?,
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$SuccessImplToJson(_$SuccessImpl instance) =>
     <String, dynamic>{
-      'data': instance.data,
-      'isBinary': instance.isBinary,
-      'runtimeType': instance.$type,
+      if (instance.data case final value?) 'data': value,
+      'type': instance.$type,
     };
 
 _$ErrorImpl _$$ErrorImplFromJson(Map<String, dynamic> json) => _$ErrorImpl(
       (json['code'] as num).toInt(),
       json['error'] as String,
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$ErrorImplToJson(_$ErrorImpl instance) =>
     <String, dynamic>{
       'code': instance.code,
       'error': instance.error,
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };

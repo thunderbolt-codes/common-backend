@@ -16,8 +16,8 @@ Future process(context, Future<Result> Function(Client) process) async {
 
   final result = await process(client);
   final code = result.when(
-    success: (data, isBinary) {
-      context.log("Success: ${isBinary == true ? "Binary data" : data}");
+    success: (data) {
+      context.log("Success: $data");
       return 200;
     },
     error: (code, error) {
