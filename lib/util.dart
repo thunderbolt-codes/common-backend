@@ -11,7 +11,7 @@ Future process(context, Future<Result> Function(Client) process) async {
   final startTime = DateTime.now();
   final client = Client()
       .setEndpoint(Platform.environment["APPWRITE_FUNCTION_API_ENDPOINT"]!)
-      .setProject(Platform.environment["APPWRITE_FUNCTION_PROJECT_ID"])
+      .setProject(Platform.environment["APPWRITE_FUNCTION_PROJECT_ID"]!)
       .setKey(context.req.headers["x-appwrite-key"]);
 
   final result = await process(client);
